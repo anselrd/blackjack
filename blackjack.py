@@ -38,22 +38,22 @@ class Deck(object):
 
 
 class StandardDeck(Deck):
-    cards = []
-    for suit in ['s', 'h', 'c', 'd']:
-        for index in ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']:
-            cards.append(Card(index, suit))
 
     def __init__(self):
-        super().__init__(self.cards)
+        cards = []
+        for suit in ['s', 'h', 'c', 'd']:
+            for index in ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']:
+                cards.append(Card(index, suit))
+        super().__init__(cards)
 
 
 class MultiDeck(Deck):
 
     def __init__(self, decks):
-        self.cards = []
+        cards = []
         for deck in decks:
-            self.cards.append(deck.cards)
-        self.shuffle_deck()
+            cards.append(deck.cards)
+        super().__init__(cards)
 
 
 class CardSuitError(Exception):
