@@ -17,7 +17,7 @@ class Card(object):
               'k': 10,
               'a': [1, 11]}
 
-    def __init__(self, index, suit):
+    def __init__(self, index, suit, facedown=False):
         if suit not in self.valid_suits:
             raise CardSuitError(suit)
         elif index not in self.values.keys():
@@ -25,6 +25,7 @@ class Card(object):
         self.suit = suit
         self.index = index
         self.value = self.values[index]
+        self.is_facedown = facedown
 
 
 class Deck(object):
@@ -56,6 +57,64 @@ class MultiDeck(Deck):
         super().__init__(cards)
 
 
+class Chip(object):
+
+    def __init__(self, value):
+        self.value = value
+
+
+class Wallet(object):
+
+    def __init__(self, chips):
+        self.chips = chips
+        self.total = self.sum_chips()
+
+    def sum_chips(self):
+        total = 0
+        for chip in self.chips:
+            total += chip.value
+        return total
+
+    def add_amount(self, amount):
+        # figure out how to determine chip values
+        pass
+
+    def subtract_amount(self, amount):
+        self.add_amount(-1 * amount)
+
+
+class Person(object):
+
+    def __init__(self, name, wallet):
+        self.name = name
+        self.wallet = wallet
+
+    def pay(self, person, amount):
+        if self.wallet.sum_chips() < amount:
+            raise UnableToPayError
+        self.wallet.subtract(amount)
+        person.wallet.add(amount)
+
+
+class Player(Person):
+    pass
+
+
+class Dealer(Person):
+    pass
+
+
+class Hand(object):
+
+    cards = []
+
+    def __init__(self, player):
+        self.player = player
+
+    def owner(self):
+        return self.player
+
+
 class CardSuitError(Exception):
 
     def __init__(self, invalid_suit):
@@ -72,3 +131,9 @@ class CardIndexError(Exception):
             print('Card index must be a string. Got type ' + str(type(invalid_index)))
         else:
             print("Suit '" + invalid_index + "' not recognized. Suits must be one of '1-10', 'j', 'q', 'k', 'a'.")
+
+
+class UnableToPayError(Exception):
+
+    def __init__(self, payer, payee, amount):
+        print(payer + " cannot pay " + payee + " amount $" + amount + ". " + payer + " only has $" + payer.wallet.sum_chips())
