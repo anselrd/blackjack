@@ -37,6 +37,8 @@ class Deck(object):
     def shuffle_deck(self):
         random.shuffle(self.cards)
 
+    def deal(self, hand):
+        hand.cards.append(self.cards.pop())
 
 class StandardDeck(Deck):
 
@@ -97,10 +99,12 @@ class Person(object):
 
 
 class Player(Person):
+    # may not be necessary
     pass
 
 
 class Dealer(Person):
+    # may not be necessary
     pass
 
 
@@ -113,6 +117,15 @@ class Hand(object):
 
     def owner(self):
         return self.player
+
+    def add_card(self, card):
+        self.cards.append(card)
+
+
+class Table(object):
+
+    def __init__(self, dealer, players, ruleset)
+        pass
 
 
 class CardSuitError(Exception):
