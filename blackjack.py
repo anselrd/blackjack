@@ -37,8 +37,12 @@ class Deck(object):
     def shuffle_deck(self):
         random.shuffle(self.cards)
 
-    def deal(self, hand):
-        hand.cards.append(self.cards.pop())
+    def deal(self, hand, plays_facedown=False):
+        dealt_card = self.cards.pop()
+        if plays_facedown:
+            dealt_card.is_facedown = True
+        hand.cards.append(dealt_card)
+
 
 class StandardDeck(Deck):
 
@@ -124,7 +128,7 @@ class Hand(object):
 
 class Table(object):
 
-    def __init__(self, dealer, players, ruleset)
+    def __init__(self, dealer, players, ruleset=DealerStayAll17, max_hands=7):
         pass
 
 
