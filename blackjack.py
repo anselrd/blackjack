@@ -4,19 +4,7 @@ import rulesets
 
 class Card(object):
     valid_suits = ['s', 'h', 'c', 'd']
-    values = {'2': 2,
-              '3': 3,
-              '4': 4,
-              '5': 5,
-              '6': 6,
-              '7': 7,
-              '8': 8,
-              '9': 9,
-              '10': 10,
-              'j': 10,
-              'q': 10,
-              'k': 10,
-              'a': [1, 11]}
+    values = rulesets.RuleSet.valid_cards
 
     def __init__(self, index, suit, facedown=False):
         if suit not in self.valid_suits:
