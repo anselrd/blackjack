@@ -1,4 +1,5 @@
 import random
+import rulesets
 
 
 class Card(object):
@@ -27,6 +28,11 @@ class Card(object):
         self.value = self.values[index]
         self.is_facedown = facedown
 
+    def __eq__(self, other):
+        if isinstance(other, Card):
+            return self.index == other.index
+        else:
+            return False
 
 class Deck(object):
 
@@ -129,7 +135,10 @@ class Hand(object):
 class Table(object):
 
     def __init__(self, dealer, players, ruleset=DealerStayAll17, max_hands=7):
-        pass
+        self.dealer = dealer
+        self.players = players
+        self.ruleset = ruleset
+        self.max_hands = max_hands
 
 
 class CardSuitError(Exception):
