@@ -6,7 +6,8 @@ public class Main {
 
         System.out.println("deez nUTS");
 
-        Card booty = new Card(new Spades(), new Ace());
+        Card booty = new Card(new Spades(), new Rank(1));
+        System.out.println(booty.getRank());
 
     }
 

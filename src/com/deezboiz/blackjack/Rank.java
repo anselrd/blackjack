@@ -22,17 +22,20 @@ public class Rank {
 
     }
 
-    private int key;
+    private String name;
+    private int[] values;
 
     public Rank(int index){
-        this.key = index;
+        name = rankMapping.get(index).getName();
+        values = rankMapping.get(index).getValues();
     }
 
-    public int[] getValueOptions(){
-        return rankMapping.get(key).getValues();
+    @Override
+    public String toString() {
+        return name;
     }
 
-    public String getName(){
-        return rankMapping.get(key).getName();
+    public boolean isSingleValued(){
+        return values.length == 1;
     }
 }
