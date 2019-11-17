@@ -1,21 +1,10 @@
 import random
+import rulesets
 
 
 class Card(object):
     valid_suits = ['s', 'h', 'c', 'd']
-    values = {'2': 2,
-              '3': 3,
-              '4': 4,
-              '5': 5,
-              '6': 6,
-              '7': 7,
-              '8': 8,
-              '9': 9,
-              '10': 10,
-              'j': 10,
-              'q': 10,
-              'k': 10,
-              'a': [1, 11]}
+    values = rulesets.RuleSet.valid_cards
 
     def __init__(self, index, suit, facedown=False):
         if suit not in self.valid_suits:
@@ -27,6 +16,11 @@ class Card(object):
         self.value = self.values[index]
         self.is_facedown = facedown
 
+    def __eq__(self, other):
+        if isinstance(other, Card):
+            return self.index == other.index
+        else:
+            return False
 
 class Deck(object):
 
@@ -36,6 +30,12 @@ class Deck(object):
 
     def shuffle_deck(self):
         random.shuffle(self.cards)
+
+    def deal(self, hand, plays_facedown=False):
+        dealt_card = self.cards.pop()
+        if plays_facedown:
+            dealt_card.is_facedown = True
+        hand.cards.append(dealt_card)
 
 
 class StandardDeck(Deck):
@@ -97,10 +97,12 @@ class Person(object):
 
 
 class Player(Person):
+    # may not be necessary
     pass
 
 
 class Dealer(Person):
+    # may not be necessary
     pass
 
 
@@ -113,6 +115,18 @@ class Hand(object):
 
     def owner(self):
         return self.player
+
+    def add_card(self, card):
+        self.cards.append(card)
+
+
+class Table(object):
+
+    def __init__(self, dealer, players, ruleset=DealerStayAll17, max_hands=7):
+        self.dealer = dealer
+        self.players = players
+        self.ruleset = ruleset
+        self.max_hands = max_hands
 
 
 class CardSuitError(Exception):
