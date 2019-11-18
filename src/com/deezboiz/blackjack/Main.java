@@ -6,7 +6,12 @@ public class Main {
 
         System.out.println("Main program starting...");
 
-        new Deck(2);
+        Deck gameDeck = new Deck(1);
+        Dealer dealer = new Dealer();
+        dealer.deal(gameDeck, dealer);
+        dealer.deal(gameDeck, dealer);
+        System.out.println(dealer.getHand());
+
 
     }
 
