@@ -6,8 +6,7 @@ public class Main {
 
         System.out.println("Main program starting...");
 
-        Card booty = new Card(Card.Suit.SPADES, new Rank(1));
-        System.out.println(booty);
+        new Deck(2);
 
     }
 
