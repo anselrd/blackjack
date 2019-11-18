@@ -39,4 +39,8 @@ public class Rank {
     public boolean isSingleValued(){
         return values.length == 1;
     }
+
+    public int[] getValues(){
+        return values;
+    }
 }

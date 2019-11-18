@@ -1,6 +1,8 @@
 package com.deezboiz.blackjack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Hand {
@@ -12,9 +14,27 @@ public class Hand {
         cards.add(card);
     }
 
-    public int getValue() {
+//     @TODO figure this out
+//    public int getValue() {
+//        int handValue = 0;
+//        cards.stream().forEach((card) -> {
+//            handValue += card.getRank().
+//        });
+//        return handValue;
+//    }
+    public int getLowestValue() {
         int handValue = 0;
-        
+        for (Card card : cards){
+            handValue += Arrays.stream(card.getPointValues()).min().getAsInt();
+        }
+        return handValue;
+    }
+
+    public int getHighestValue() {
+        int handValue = 0;
+        for (Card card : cards){
+            handValue += Arrays.stream(card.getPointValues()).max().getAsInt();
+        }
         return handValue;
     }
 

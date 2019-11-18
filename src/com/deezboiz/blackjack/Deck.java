@@ -1,6 +1,5 @@
 package com.deezboiz.blackjack;
 
-import java.util.List;
 import java.util.Stack;
 
 import static java.util.Collections.shuffle;

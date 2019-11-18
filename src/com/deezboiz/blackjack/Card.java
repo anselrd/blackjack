@@ -27,12 +27,12 @@ public class Card {
         return suit;
     }
 
-    public Rank getRank() {
-        return rank;
+    public int[] getPointValues() {
+        return rank.getValues();
     }
 
     @Override
     public String toString() {
-        return getRank() + " of " + suitNames.get(suit);
+        return rank + " of " + suitNames.get(suit);
     }
 }

@@ -10,7 +10,7 @@ public class Main {
         Dealer dealer = new Dealer();
         dealer.deal(gameDeck, dealer);
         dealer.deal(gameDeck, dealer);
-        System.out.println(dealer.getHand());
+        System.out.println(dealer.getHand().getHighestValue());
 
 
     }
