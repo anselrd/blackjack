@@ -12,15 +12,6 @@ public class Hand {
 
     private int bet;
 
-    public Hand() {
-        // want to leave this blank
-    }
-
-//    public Hand(Card card1, Card card2) {
-//        this.cards.add(card1);
-//        this.cards.add(card2);
-//    }
-
     public void setBet(int bet) {
         this.bet = bet;
     }
