@@ -1,4 +1,4 @@
-package com.deezboiz.blackjack;
+package com.deezboiz.blackjack.engine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Game {
     }
 
     private void playRound() {
-        setUpHands();;
+        setUpHands();
         placeBets();
         dealInitialRound();
         printGameStatus();

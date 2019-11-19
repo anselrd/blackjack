@@ -1,4 +1,4 @@
-package com.deezboiz.blackjack;
+package com.deezboiz.blackjack.engine;
 
 public class RankInfo {
 

@@ -1,10 +1,12 @@
 package com.deezboiz.blackjack;
 
-public class Main {
+import com.deezboiz.blackjack.engine.Game;
+
+public class Blackjack {
 
     public static void main(String[] args) {
 
-        System.out.println("Main program starting...");
+        System.out.println("Blackjack program starting...");
 
         Game game = new Game(2);
         game.playGame();
