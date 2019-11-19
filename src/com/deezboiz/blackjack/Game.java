@@ -1,44 +1,67 @@
 package com.deezboiz.blackjack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
 
     private boolean isActive;
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     private Deck gameDeck;
     private Player dealer;
 
     public Game(int numDecks) {
         this.isActive = true;
         this.gameDeck = new Deck(numDecks);
-        this.players.add(new Player("matt"));
-        this.players.add(new Player( "ansel"));
-        this.dealer = new Player("dealer");
+        this.players.add(new Player("Matt"));
+        this.players.add(new Player("Ansel"));
+        this.dealer = new Player("Dealer");
     }
 
     public void playGame() {
-        // do betting here
+        setUpHands();
+        placeBets();
         dealInitialRound();
-        while (isActive) {
-            doRound();
-        }
+        System.out.println(this);
+        isActive = false;
     }
 
-    // create bet method here
+    private void setUpHands() {
+        for (Player player : players) {
+            player.addHand(new Hand());
+        }
+        dealer.addHand(new Hand());
+    }
+
+    private void placeBets() {
+        for (Player player : players) {
+            for (Hand hand : player.getHands()) {
+                hand.setBet(10);
+            }
+        }
+    }
 
     private void dealInitialRound() {
         for (Player player : players) {
-            player.addHand(new Hand());
-            player.dealToHand(gameDeck, player.getHand);
+            for (Hand hand : player.getHands()) {
+                hand.add(gameDeck.deal());
+                hand.add(gameDeck.deal());
+            }
         }
-        dealer.addHand(new Hand());
-        dealer.
-
+        for (Hand hand : dealer.getHands()) {
+            hand.add(gameDeck.deal());
+            hand.add(gameDeck.deal());
+        }
     }
 
-    private void doRound() {
-
+    @Override
+    public String toString() {
+        StringBuilder gameString = new StringBuilder("Game status:\n\n");
+        for (Player player : players) {
+            gameString.append(player.toString());
+        }
+        gameString.append(dealer.toString());
+        return gameString.toString();
     }
 
 }

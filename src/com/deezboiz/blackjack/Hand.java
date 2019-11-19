@@ -13,8 +13,13 @@ public class Hand {
     private int bet;
 
     public Hand() {
-
+        // want to leave this blank
     }
+
+//    public Hand(Card card1, Card card2) {
+//        this.cards.add(card1);
+//        this.cards.add(card2);
+//    }
 
     public void setBet(int bet) {
         this.bet = bet;
@@ -40,7 +45,7 @@ public class Hand {
         return (getLowestValue() == 21 || getHighestValue() == 21);
     }
 
-    public int getLowestValue() {
+    private int getLowestValue() {
         int handValue = 0;
         for (Card card : cards){
             handValue += Arrays.stream(card.getPointValues()).min().getAsInt();
@@ -48,7 +53,7 @@ public class Hand {
         return handValue;
     }
 
-    public int getHighestValue() {
+    private int getHighestValue() {
         int handValue = 0;
         for (Card card : cards){
             handValue += Arrays.stream(card.getPointValues()).max().getAsInt();
@@ -58,11 +63,14 @@ public class Hand {
 
     @Override
     public String toString() {
-        StringBuilder handString = new StringBuilder("My hand has:\n");
+        StringBuilder handString = new StringBuilder();
         for (Card card : cards) {
             handString.append(card.toString());
             handString.append("\n");
         }
+        handString.append("Bet: ");
+        handString.append(bet);
+        handString.append("\n\n");
         return handString.toString();
     }
 
