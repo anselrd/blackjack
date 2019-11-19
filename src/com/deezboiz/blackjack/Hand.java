@@ -10,11 +10,20 @@ public class Hand {
     private List<Card> cards = new ArrayList<>();
     private Player owner;
 
+    private int bet;
+
+    public Hand() {
+
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
+
     public void add(Card card) {
         cards.add(card);
     }
 
-//     @TODO figure this out
 //    public int getValue() {
 //        int handValue = 0;
 //        cards.stream().forEach((card) -> {
@@ -22,6 +31,15 @@ public class Hand {
 //        });
 //        return handValue;
 //    }
+
+    public boolean bust() {
+        return getLowestValue() > 21;
+    }
+
+    public boolean blackjack() {
+        return (getLowestValue() == 21 || getHighestValue() == 21);
+    }
+
     public int getLowestValue() {
         int handValue = 0;
         for (Card card : cards){
@@ -46,5 +64,9 @@ public class Hand {
             handString.append("\n");
         }
         return handString.toString();
+    }
+
+    public int getBet() {
+        return bet;
     }
 }

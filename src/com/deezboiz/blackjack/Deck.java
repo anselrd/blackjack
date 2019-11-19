@@ -17,13 +17,13 @@ public class Deck {
         for (int i = 0; i < numDecks; i++) {
             cards.addAll(generateStandardDeck());
         }
-        for (Card card : cards) {
-            System.out.println(card);
-        }
+//        for (Card card : cards) {
+//            System.out.println(card);
+//        }
         shuffleCards();
-        for (Card card : cards) {
-            System.out.println(card);
-        }
+//        for (Card card : cards) {
+//            System.out.println(card);
+//        }
     }
 
     private Stack<Card> generateStandardDeck() {
