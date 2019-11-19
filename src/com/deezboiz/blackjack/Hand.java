@@ -12,8 +12,11 @@ public class Hand {
 
     private int bet;
 
-    public void setBet(int bet) {
-        this.bet = bet;
+    // @TODO implement an enum here probably
+    private int status; // 0 = active, 1 = stay, 2 = bust
+
+    public Hand() {
+        this.status = 0;
     }
 
     public void add(Card card) {
@@ -28,11 +31,11 @@ public class Hand {
 //        return handValue;
 //    }
 
-    public boolean bust() {
+    public boolean isBust() {
         return getLowestValue() > 21;
     }
 
-    public boolean blackjack() {
+    public boolean isBlackjack() {
         return (getLowestValue() == 21 || getHighestValue() == 21);
     }
 
@@ -67,5 +70,21 @@ public class Hand {
 
     public int getBet() {
         return bet;
+    }
+
+    public void setBet(int bet) {
+        this.bet = bet;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void stay() {
+        this.status = 1;
+    }
+
+    public void bust() {
+        this.status = 2;
     }
 }

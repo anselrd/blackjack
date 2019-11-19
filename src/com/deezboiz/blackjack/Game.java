@@ -19,11 +19,22 @@ public class Game {
     }
 
     public void playGame() {
-        setUpHands();
+        while (isActive) {
+            playRound();
+            cleanRound();
+        }
+    }
+
+    private void playRound() {
+        setUpHands();;
         placeBets();
         dealInitialRound();
-        System.out.println(this);
-        isActive = false;
+        printGameStatus();
+    }
+
+    private void cleanRound() {
+//        gameDeck.decideToShuffle; Should shuffle (i.e. create new deck) if a certain amount of cards left in deck
+        this.isActive = false; // just to prevent infinite loops for now
     }
 
     private void setUpHands() {
@@ -54,14 +65,13 @@ public class Game {
         }
     }
 
-    @Override
-    public String toString() {
+    private void printGameStatus() {
         StringBuilder gameString = new StringBuilder("Game status:\n\n");
         for (Player player : players) {
             gameString.append(player.toString());
         }
         gameString.append(dealer.toString());
-        return gameString.toString();
+        System.out.println(gameString.toString());
     }
 
 }
