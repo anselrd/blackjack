@@ -31,14 +31,13 @@ public class Game {
         placeBets();
         dealInitialRound();
         for (Player player : players) {
-            doPlayerRound(player,gameDeck);
+            doPlayerRound(player);
         }
-        //players.forEach(Game::doPlayerRound); // is this just doPlayerRound(player) for each Player player in players?
         printGameStatus();
     }
 
     private void cleanRound() {
-//        gameDeck.decideToShuffle; Should shuffle (i.e. create new deck) if a certain amount of cards left in deck
+//        gameDeck.decideToShuffle(players.size() + 1); Should shuffle (i.e. create new deck) if a certain amount of cards left in deck
         this.isActive = false; // just to prevent infinite loops for now
     }
 
@@ -50,53 +49,53 @@ public class Game {
     }
 
     private void placeBets() {
-        for (Player player : players) {
-            for (Hand hand : player.getHands()) {
-                hand.setBet(10);
-            }
-        }
+//        for (Player player : players) {
+//            for (Hand hand : player.getHands()) {
+//                hand.setBet(10);
+//            }
+//        }
     }
 
     private void dealInitialRound() {
         for (Player player : players) {
-            for (Hand hand : player.getHands()) {
-                hand.add(gameDeck.deal());
-                hand.add(gameDeck.deal());
-            }
+            player.addHand(new Hand());
+            player.getActiveHand().add(gameDeck.deal());
+            player.getActiveHand().add(gameDeck.deal());
         }
-        for (Hand hand : dealer.getHands()) {
-            hand.add(gameDeck.deal());
-            hand.add(gameDeck.deal());
+        dealer.addHand(new Hand());
+        dealer.getActiveHand().add(gameDeck.deal());
+        dealer.getActiveHand().add(gameDeck.deal());
+    }
+
+    private void doPlayerRound(Player player) {
+        for (boolean stillPlaying = true; stillPlaying; stillPlaying = player.isInPlay()) playActiveHand(player);
+    }
+
+    private void playActiveHand(Player player) {
+        while (player.getActiveHand().isInPlay()) {
+            String playerChoice = getPlayerChoice(player.getActiveHand());
+            switch (playerChoice) {
+                case "hit" :
+                    player.getActiveHand().add(gameDeck.deal());
+                    break;
+                case "stay" :
+                    player.getActiveHand().stay();
+                    break;
+                case "split" :
+                    player.splitActiveHand();
+                    break;
+                default :
+                    System.out.println("You did a bad thing and I don't know how to do exception handling in Java!");
+                    break;
+            }
         }
     }
 
-    private static void doPlayerRound(Player player, Deck gameDeck) {
-        // logic for actually playing here
-        //List<Hand> splitHands = new ArrayList<>();
-        // something recursive here
+    private String getPlayerChoice(Hand hand) {
         Scanner in = new Scanner(System.in);
-        for (Hand hand : player.getHands()) {
-            if (hand.isInPlay()) {
-                System.out.println(hand);
-                System.out.println("What do you want to do? (Hit/Stay/Split):\n");
-                String playerChoice = in.nextLine();
-                switch (playerChoice) {
-                    case "Hit" :
-                        player.dealToHand(gameDeck,hand);
-                        break;
-                    case "Stay" :
-                        hand.stay();
-                        break;
-                    case "Split" :
-                        //hand.split(); deal with this later
-                        break;
-                    default :
-                        System.out.println("You did a bad thing and I don't know how to do exception handling in Java!");
-                        break;
-                }
-                doPlayerRound(player, gameDeck);
-            }
-        }
+        System.out.println(hand);
+        System.out.println("What do you want to do? (Hit/Stay/Split):\n");
+        return in.nextLine().toLowerCase();
     }
 
     private void printGameStatus() {

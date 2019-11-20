@@ -18,6 +18,12 @@ public class Hand {
 
     private boolean inPlay = true;
 
+    Hand(){}
+
+    Hand(Card card) {
+        cards.add(card);
+    }
+
     void add(Card card) {
         cards.add(card);
         recomputeNonOptionalStatus();
@@ -26,7 +32,7 @@ public class Hand {
     private void recomputeNonOptionalStatus() {
         if (isBust()) handStatus = status.BUST;
         if (isBlackjack()) handStatus = status.STAY;
-        inPlay = handStatus != status.ACTIVE;
+        inPlay = handStatus == status.ACTIVE;
     }
 
     private boolean isBust() {
@@ -74,18 +80,18 @@ public class Hand {
         this.bet = bet;
     }
 
-    public status getStatus() {
-        return handStatus;
-    }
-
-    public void stay() {
+    void stay() {
         handStatus = status.STAY;
         inPlay = false;
     }
 
+    Card split() {
+        Card split = cards.get(0);
+        cards.remove(0);
+        return split;
+    }
 
-    public boolean isInPlay() {
-        inPlay = !isBust() && !isBlackjack();
+    boolean isInPlay() {
         return inPlay;
     }
 
