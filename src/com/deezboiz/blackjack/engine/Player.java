@@ -8,7 +8,7 @@ public class Player {
     private List<Hand> hands = new ArrayList<>();
     private String name;
 
-    public Player(String name) {
+    Player(String name) {
         this.name = name;
     }
     public void placeBet(int bet, Hand hand) {
@@ -23,11 +23,16 @@ public class Player {
         hands.add(hand);
     }
 
+    void resetHands() {
+        hands.clear();
+        hands.add(new Hand());
+    }
+
     public String getName() {
         return name;
     }
 
-    public List<Hand> getHands() {
+    List<Hand> getHands() {
         return hands;
     }
 

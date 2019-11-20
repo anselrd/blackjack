@@ -29,6 +29,7 @@ public class Game {
         setUpHands();
         placeBets();
         dealInitialRound();
+        players.forEach(Game::doPlayerRound);
         printGameStatus();
     }
 
@@ -39,9 +40,9 @@ public class Game {
 
     private void setUpHands() {
         for (Player player : players) {
-            player.addHand(new Hand());
+            player.resetHands();
         }
-        dealer.addHand(new Hand());
+        dealer.resetHands();
     }
 
     private void placeBets() {
@@ -63,6 +64,12 @@ public class Game {
             hand.add(gameDeck.deal());
             hand.add(gameDeck.deal());
         }
+    }
+
+    private static void doPlayerRound(Player player) {
+        // logic for actually playing here
+        List<Hand> splitHands = new ArrayList<>();
+        // something recursive here
     }
 
     private void printGameStatus() {

@@ -11,30 +11,29 @@ public class Hand {
 
     private int bet;
 
-    // @TODO implement an enum here probably
-    private int status; // 0 = active, 1 = stay, 2 = bust
-
-    public Hand() {
-        this.status = 0;
+    private enum status {
+        ACTIVE, STAY, BUST
     }
+    private status handStatus = status.ACTIVE;
 
-    public void add(Card card) {
+    private boolean inPlay = true;
+
+    void add(Card card) {
         cards.add(card);
+        recomputeNonOptionalStatus();
     }
 
-//    public int getValue() {
-//        int handValue = 0;
-//        cards.stream().forEach((card) -> {
-//            handValue += card.getRank().
-//        });
-//        return handValue;
-//    }
+    private void recomputeNonOptionalStatus() {
+        if (isBust()) handStatus = status.BUST;
+        if (isBlackjack()) handStatus = status.STAY;
+        inPlay = handStatus != status.ACTIVE;
+    }
 
-    public boolean isBust() {
+    private boolean isBust() {
         return getLowestValue() > 21;
     }
 
-    public boolean isBlackjack() {
+    private boolean isBlackjack() {
         return (getLowestValue() == 21 || getHighestValue() == 21);
     }
 
@@ -71,19 +70,21 @@ public class Hand {
         return bet;
     }
 
-    public void setBet(int bet) {
+    void setBet(int bet) {
         this.bet = bet;
     }
 
-    public int getStatus() {
-        return status;
+    public status getStatus() {
+        return handStatus;
     }
 
     public void stay() {
-        this.status = 1;
+        handStatus = status.STAY;
+        inPlay = false;
     }
 
-    public void bust() {
-        this.status = 2;
+    public boolean isInPlay() {
+        return inPlay;
     }
+
 }
