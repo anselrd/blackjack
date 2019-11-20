@@ -83,7 +83,9 @@ public class Hand {
         inPlay = false;
     }
 
+
     public boolean isInPlay() {
+        inPlay = !isBust() && !isBlackjack();
         return inPlay;
     }
 

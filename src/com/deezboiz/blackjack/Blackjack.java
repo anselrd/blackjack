@@ -9,6 +9,7 @@ public class Blackjack {
         System.out.println("Blackjack program starting...");
 
         Game game = new Game(2);
+
         game.playGame();
 
     }

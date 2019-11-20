@@ -2,6 +2,7 @@ package com.deezboiz.blackjack.engine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Game {
 
@@ -29,7 +30,10 @@ public class Game {
         setUpHands();
         placeBets();
         dealInitialRound();
-        players.forEach(Game::doPlayerRound);
+        for (Player player : players) {
+            doPlayerRound(player,gameDeck);
+        }
+        //players.forEach(Game::doPlayerRound); // is this just doPlayerRound(player) for each Player player in players?
         printGameStatus();
     }
 
@@ -66,10 +70,33 @@ public class Game {
         }
     }
 
-    private static void doPlayerRound(Player player) {
+    private static void doPlayerRound(Player player, Deck gameDeck) {
         // logic for actually playing here
-        List<Hand> splitHands = new ArrayList<>();
+        //List<Hand> splitHands = new ArrayList<>();
         // something recursive here
+        Scanner in = new Scanner(System.in);
+        for (Hand hand : player.getHands()) {
+            if (hand.isInPlay()) {
+                System.out.println(hand);
+                System.out.println("What do you want to do? (Hit/Stay/Split):\n");
+                String playerChoice = in.nextLine();
+                switch (playerChoice) {
+                    case "Hit" :
+                        player.dealToHand(gameDeck,hand);
+                        break;
+                    case "Stay" :
+                        hand.stay();
+                        break;
+                    case "Split" :
+                        //hand.split(); deal with this later
+                        break;
+                    default :
+                        System.out.println("You did a bad thing and I don't know how to do exception handling in Java!");
+                        break;
+                }
+                doPlayerRound(player, gameDeck);
+            }
+        }
     }
 
     private void printGameStatus() {
