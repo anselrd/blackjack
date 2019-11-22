@@ -10,6 +10,7 @@ public class Game {
     private List<Player> players = new ArrayList<>();
     private Deck gameDeck;
     private Player dealer;
+    static int theNumber = 21;
 
     public Game(int numDecks) {
         this.isActive = true;
@@ -29,6 +30,7 @@ public class Game {
 
     private void playRound() {
         placeBets();
+        gameDeck.stackTheDeck();
         dealInitialRound();
         for (Player player : players) {
             System.out.println(player.getName());

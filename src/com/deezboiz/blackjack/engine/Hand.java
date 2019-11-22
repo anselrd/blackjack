@@ -36,7 +36,7 @@ public class Hand {
     }
 
     private boolean isBust() {
-        if (getLowestValue() > 21) {
+        if (getLowestValue() > Game.theNumber) {
             System.out.println("You busted you idiot");
             return true;
         } else {
@@ -44,14 +44,27 @@ public class Hand {
         }
     }
 
-    // @todo make this be good e.g. n aces gives 2^n values, this is only checking 2 values
     private boolean isBlackjack() {
-        if (getLowestValue() == 21 || getHighestValue() == 21) {
-            System.out.println("BLACKJACK!!");
+        if (getAllValues().contains(Game.theNumber)) {
+            System.out.println("BLACKJACK!!!");
             return true;
         } else {
             return false;
         }
+    }
+
+    private List<Integer> getAllValues() {
+        int numAces = countAces();
+        List<Integer> handValues = new ArrayList<>(numAces + 1);
+        int baseValue = getLowestValue();
+        for (int i = 0; i < numAces + 1; i++) {
+            handValues.add(i, baseValue + 10 * i);
+        }
+        return handValues;
+    }
+
+    private int countAces() {
+        return cards.stream().mapToInt(card -> card.getRank().isSingleValued() ? 0 : 1).sum();
     }
 
     private int getLowestValue() {

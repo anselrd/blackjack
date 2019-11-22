@@ -56,4 +56,9 @@ public class Deck {
             createNewDeck();
         }
     }
+
+    void stackTheDeck() {
+        cards.clear();
+        for (int i = 0; i < 52; i++ ) cards.add(new Card(Card.Suit.SPADES, new Rank(1)));
+    }
 }

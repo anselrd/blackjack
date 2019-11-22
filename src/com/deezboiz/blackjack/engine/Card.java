@@ -17,7 +17,7 @@ public class Card {
 
     private Suit suit;
 
-    private Rank getRank() {
+    Rank getRank() {
         return rank;
     }
 
@@ -41,7 +41,7 @@ public class Card {
         return rank + " of " + suitNames.get(suit);
     }
 
-    public boolean equals(Card card1) {
+    boolean equals(Card card1) {
         return (this.getRank().equals(card1.getRank()));
     }
 }
