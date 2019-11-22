@@ -16,9 +16,14 @@ public class Card {
     }
 
     private Suit suit;
+
+    private Rank getRank() {
+        return rank;
+    }
+
     private Rank rank;
 
-    public Card(Suit suit, Rank rank) {
+    Card(Suit suit, Rank rank) {
         this.suit = suit;
         this.rank = rank;
     }
@@ -27,12 +32,16 @@ public class Card {
         return suit;
     }
 
-    public int[] getPointValues() {
+    int[] getPointValues() {
         return rank.getValues();
     }
 
     @Override
     public String toString() {
         return rank + " of " + suitNames.get(suit);
+    }
+
+    public boolean equals(Card card1) {
+        return (this.getRank().equals(card1.getRank()));
     }
 }

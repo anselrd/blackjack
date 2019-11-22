@@ -46,7 +46,15 @@ public class Player {
         }
     }
 
-    void splitActiveHand() {
+    void trySplittingActiveHand() {
+        if (activeHand.isSplittable()) {
+            splitActiveHand();
+        } else {
+            System.out.println("YOU BAD BOI YOU TRIED TO SPLIT WHEN YOU CAN'T");
+        }
+    }
+
+    private void splitActiveHand() {
         Card toSplit = getActiveHand().split();
         addHand(new Hand(toSplit));
     }

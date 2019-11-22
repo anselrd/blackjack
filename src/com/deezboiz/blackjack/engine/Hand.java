@@ -12,7 +12,7 @@ public class Hand {
     private int bet;
 
     private enum status {
-        ACTIVE, STAY, BUST
+        ACTIVE, STAY, BUST, BLACKJACK
     }
     private status handStatus = status.ACTIVE;
 
@@ -31,16 +31,27 @@ public class Hand {
 
     private void recomputeNonOptionalStatus() {
         if (isBust()) handStatus = status.BUST;
-        if (isBlackjack()) handStatus = status.STAY;
+        if (isBlackjack()) handStatus = status.BLACKJACK;
         inPlay = handStatus == status.ACTIVE;
     }
 
     private boolean isBust() {
-        return getLowestValue() > 21;
+        if (getLowestValue() > 21) {
+            System.out.println("You busted you idiot");
+            return true;
+        } else {
+            return false;
+        }
     }
 
+    // @todo make this be good e.g. n aces gives 2^n values, this is only checking 2 values
     private boolean isBlackjack() {
-        return (getLowestValue() == 21 || getHighestValue() == 21);
+        if (getLowestValue() == 21 || getHighestValue() == 21) {
+            System.out.println("BLACKJACK!!");
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private int getLowestValue() {
@@ -86,13 +97,18 @@ public class Hand {
     }
 
     Card split() {
-        Card split = cards.get(0);
-        cards.remove(0);
+        Card split = cards.get(1);
+        cards.remove(1);
         return split;
     }
 
     boolean isInPlay() {
         return inPlay;
     }
+
+    boolean isSplittable() {
+        return cards.size() == 2 && cards.get(0).equals(cards.get(1));
+    }
+
 
 }

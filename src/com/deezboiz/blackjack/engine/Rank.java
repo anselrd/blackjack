@@ -40,7 +40,11 @@ public class Rank {
         return values.length == 1;
     }
 
-    public int[] getValues(){
+    int[] getValues(){
         return values;
+    }
+
+    boolean equals(Rank rank1) {
+        return this.name.equals(rank1.name);
     }
 }

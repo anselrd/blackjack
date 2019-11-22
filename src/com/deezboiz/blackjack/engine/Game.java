@@ -16,6 +16,7 @@ public class Game {
         this.gameDeck = new Deck(numDecks);
         this.players.add(new Player("Matt"));
         this.players.add(new Player("Ansel"));
+        this.players.add(new Player( "Cassy"));
         this.dealer = new Player("Dealer");
     }
 
@@ -27,25 +28,28 @@ public class Game {
     }
 
     private void playRound() {
-        setUpHands();
         placeBets();
         dealInitialRound();
         for (Player player : players) {
+            System.out.println(player.getName());
+            System.out.println("");
             doPlayerRound(player);
         }
-        printGameStatus();
+        doPlayerRound(dealer);
+        //printGameStatus();
     }
 
-    private void cleanRound() {
-//        gameDeck.decideToShuffle(players.size() + 1); Should shuffle (i.e. create new deck) if a certain amount of cards left in deck
-        this.isActive = false; // just to prevent infinite loops for now
-    }
-
-    private void setUpHands() {
+    private void tearDownHands() {
         for (Player player : players) {
             player.resetHands();
         }
         dealer.resetHands();
+    }
+
+    private void cleanRound() {
+//        gameDeck.decideToShuffle(players.size() + 1); Should shuffle (i.e. create new deck) if a certain amount of cards left in deck
+        tearDownHands();
+        this.isActive = false; // just to prevent infinite loops for now
     }
 
     private void placeBets() {
@@ -72,7 +76,7 @@ public class Game {
     }
 
     private void playActiveHand(Player player) {
-        while (player.getActiveHand().isInPlay()) {
+        while (player.isInPlay()) {
             String playerChoice = getPlayerChoice(player.getActiveHand());
             switch (playerChoice) {
                 case "hit" :
@@ -82,7 +86,7 @@ public class Game {
                     player.getActiveHand().stay();
                     break;
                 case "split" :
-                    player.splitActiveHand();
+                    player.trySplittingActiveHand();
                     break;
                 default :
                     System.out.println("You did a bad thing and I don't know how to do exception handling in Java!");
