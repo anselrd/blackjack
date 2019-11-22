@@ -32,7 +32,7 @@ public class Game {
         dealInitialRound();
         for (Player player : players) {
             System.out.println(player.getName());
-            System.out.println("");
+            System.out.println();
             doPlayerRound(player);
         }
         doPlayerRound(dealer);
@@ -47,7 +47,7 @@ public class Game {
     }
 
     private void cleanRound() {
-//        gameDeck.decideToShuffle(players.size() + 1); Should shuffle (i.e. create new deck) if a certain amount of cards left in deck
+        gameDeck.decideToShuffle();
         tearDownHands();
         this.isActive = false; // just to prevent infinite loops for now
     }

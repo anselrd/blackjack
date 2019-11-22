@@ -2,18 +2,29 @@ package com.deezboiz.blackjack.engine;
 
 import java.util.Stack;
 
+import static java.lang.Math.max;
 import static java.util.Collections.shuffle;
 
 public class Deck {
 
     private Stack<Card> cards = new Stack<>();
+    private static int absoluteMinCards = 26;
+    private static double shuffleFrac = 0.25;
+    private int minCards;
+    private int numDecks = 1;
 
     public Deck() {
-        cards = generateStandardDeck();
-        shuffleCards();
+        minCards = absoluteMinCards;
+        createNewDeck();
     }
 
-    public Deck(int numDecks) {
+    Deck(int numDecks) {
+        this.numDecks = numDecks;
+        minCards = max((int) shuffleFrac * cards.size(), absoluteMinCards);
+        createNewDeck();
+    }
+
+    private void createNewDeck() {
         for (int i = 0; i < numDecks; i++) {
             cards.addAll(generateStandardDeck());
         }
@@ -31,12 +42,18 @@ public class Deck {
         return sd;
     }
 
-    public Card deal() {
+    Card deal() {
         return cards.pop();
     }
 
-    public void shuffleCards() {
+    private void shuffleCards() {
         shuffle(cards);
     }
 
+    void decideToShuffle() {
+        if (cards.size() < minCards) {
+            cards.clear();
+            createNewDeck();
+        }
+    }
 }

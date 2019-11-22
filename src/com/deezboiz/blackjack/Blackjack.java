@@ -8,7 +8,7 @@ public class Blackjack {
 
         System.out.println("Blackjack program starting...");
 
-        Game game = new Game(2);
+        Game game = new Game(1);
 
         game.playGame();
 
