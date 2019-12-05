@@ -29,6 +29,10 @@ public class Hand {
         recomputeNonOptionalStatus();
     }
 
+    public Card getCard(int idx) {
+        return cards.get(idx);
+    }
+
     private void recomputeNonOptionalStatus() {
         if (isBust()) handStatus = status.BUST;
         if (isBlackjack()) handStatus = status.BLACKJACK;
@@ -67,7 +71,11 @@ public class Hand {
         return cards.stream().mapToInt(card -> card.getRank().isSingleValued() ? 0 : 1).sum();
     }
 
-    private int getLowestValue() {
+    public boolean isSoft() {
+        return countAces() > 0;
+    }
+
+    public int getLowestValue() {
         int handValue = 0;
         for (Card card : cards){
             handValue += Arrays.stream(card.getPointValues()).min().getAsInt();
@@ -75,12 +83,13 @@ public class Hand {
         return handValue;
     }
 
-    private int getHighestValue() {
-        int handValue = 0;
-        for (Card card : cards){
-            handValue += Arrays.stream(card.getPointValues()).max().getAsInt();
+    public int getHighestPlayableValue() {
+        int handvalue = getLowestValue();
+        if (handvalue > Game.theNumber) {
+            return -1;
         }
-        return handValue;
+        handvalue += handvalue + 10 <= Game.theNumber ? 10 : 0;
+        return handvalue;
     }
 
     @Override
@@ -115,11 +124,11 @@ public class Hand {
         return split;
     }
 
-    boolean isInPlay() {
+    public boolean isInPlay() {
         return inPlay;
     }
 
-    boolean isSplittable() {
+    public boolean isSplittable() {
         return cards.size() == 2 && cards.get(0).equals(cards.get(1));
     }
 
