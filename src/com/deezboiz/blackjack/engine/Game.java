@@ -1,8 +1,9 @@
 package com.deezboiz.blackjack.engine;
 
+import com.deezboiz.blackjack.ui_manager.InputHandler;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Game {
 
@@ -11,14 +12,16 @@ public class Game {
     private Deck gameDeck;
     private Player dealer;
     static int theNumber = 21;
+    private InputHandler daBEan;
 
-    public Game(int numDecks) {
+    public Game(int numDecks, InputHandler daBeAN) {
         this.isActive = true;
         this.gameDeck = new Deck(numDecks);
         this.players.add(new Player("Matt"));
         this.players.add(new Player("Ansel"));
         this.players.add(new Player( "Cassy"));
         this.dealer = new Player("Dealer");
+        this.daBEan = daBeAN;
     }
 
     public void playGame() {
@@ -79,30 +82,34 @@ public class Game {
 
     private void playActiveHand(Player player) {
         while (player.isInPlay()) {
-            String playerChoice = getPlayerChoice(player.getActiveHand());
+            Action playerChoice = daBEan.getPlayerChoice(player.getActiveHand());
+            if (playerChoice == null) {
+                daBEan.reportError("you FOOL");
+                return;
+            }
             switch (playerChoice) {
-                case "hit" :
+                case HIT:
                     player.getActiveHand().add(gameDeck.deal());
                     break;
-                case "stay" :
+                case STAY:
                     player.getActiveHand().stay();
                     break;
-                case "split" :
-                    player.trySplittingActiveHand();
+                case SPLIT:
+                    player.trySplittingActiveHand(); // @TODO do nice thing if you couldn't split
                     break;
-                default :
-                    System.out.println("You did a bad thing and I don't know how to do exception handling in Java!");
+                case DOUBLE:
+                    player.getActiveHand().setBet(player.getActiveHand().getBet()*2);
+                    player.getActiveHand().add(gameDeck.deal());
+                    player.getActiveHand().stay();
+                    break;
+                default:
+                    daBEan.reportError("Uh oh you beaned it again (action must be HIT, STAY, SPLIT, or DOUBLE");
                     break;
             }
         }
     }
 
-    private String getPlayerChoice(Hand hand) {
-        Scanner in = new Scanner(System.in);
-        System.out.println(hand);
-        System.out.println("What do you want to do? (Hit/Stay/Split):\n");
-        return in.nextLine().toLowerCase();
-    }
+
 
     private void printGameStatus() {
         StringBuilder gameString = new StringBuilder("Game status:\n\n");

@@ -114,8 +114,10 @@ public class Hand {
     }
 
     void stay() {
-        handStatus = status.STAY;
-        inPlay = false;
+        if (handStatus == status.ACTIVE) {
+            handStatus = status.STAY;
+            inPlay = false;
+        }
     }
 
     Card split() {
