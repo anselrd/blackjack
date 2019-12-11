@@ -1,4 +1,4 @@
-package com.deezboiz.blackjack.engine.strategy;
+package com.deezboiz.blackjack.strategy;
 
 import com.deezboiz.blackjack.engine.Action;
 import com.deezboiz.blackjack.engine.Card;

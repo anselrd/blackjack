@@ -1,4 +1,4 @@
-package com.deezboiz.blackjack.engine.strategy;
+package com.deezboiz.blackjack.strategy;
 
 import com.deezboiz.blackjack.engine.Action;
 import com.deezboiz.blackjack.engine.Card;
@@ -18,6 +18,6 @@ public class BasicStrategy extends Strategy {
         if (hand.isSoft()) {
             return BasicStrategyTables.softTable.get(hand.getLowestValue() - 1).get(dealerUpCard);
         }
-        return BasicStrategyTables.hardTable.get(hand.getHighestPlayableValue()).get(dealerUpCard);
+        return BasicStrategyTables.hardTable.get(hand.getLowestValue()).get(dealerUpCard);
     }
 }

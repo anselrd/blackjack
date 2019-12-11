@@ -1,4 +1,4 @@
-package com.deezboiz.blackjack.engine.strategy;
+package com.deezboiz.blackjack.strategy;
 
 import com.deezboiz.blackjack.engine.Action;
 import com.deezboiz.blackjack.engine.Card;
@@ -11,7 +11,6 @@ class BasicStrategyTables {
     static HashMap<Card, HashMap<Card, Boolean>> splitTable = new HashMap<>();
     static {
         HashMap<Card, Boolean> playerTwo = new HashMap<>();
-        playerTwo.put(new Card(null, new Rank(2)), true);
         playerTwo.put(new Card(null, new Rank(2)), true);
         playerTwo.put(new Card(null, new Rank(3)), true);
         playerTwo.put(new Card(null, new Rank(4)), true);
@@ -27,21 +26,19 @@ class BasicStrategyTables {
         playerTwo.put(new Card(null, new Rank(1)), false);
 
         HashMap<Card, Boolean> playerThree = new HashMap<>();
-        playerTwo.put(new Card(null, new Rank(2)), true);
-        playerTwo.put(new Card(null, new Rank(2)), true);
-        playerTwo.put(new Card(null, new Rank(3)), true);
-        playerTwo.put(new Card(null, new Rank(4)), true);
-        playerTwo.put(new Card(null, new Rank(5)), true);
-        playerTwo.put(new Card(null, new Rank(6)), true);
-        playerTwo.put(new Card(null, new Rank(7)), true);
-        playerTwo.put(new Card(null, new Rank(8)), false);
-        playerTwo.put(new Card(null, new Rank(9)), false);
-        playerTwo.put(new Card(null, new Rank(10)), false);
-        playerTwo.put(new Card(null, new Rank(11)), false);
-        playerTwo.put(new Card(null, new Rank(12)), false);
-        playerTwo.put(new Card(null, new Rank(13)), false);
-        playerTwo.put(new Card(null, new Rank(1)), false);
-
+        playerThree.put(new Card(null, new Rank(2)), true);
+        playerThree.put(new Card(null, new Rank(3)), true);
+        playerThree.put(new Card(null, new Rank(4)), true);
+        playerThree.put(new Card(null, new Rank(5)), true);
+        playerThree.put(new Card(null, new Rank(6)), true);
+        playerThree.put(new Card(null, new Rank(7)), true);
+        playerThree.put(new Card(null, new Rank(8)), false);
+        playerThree.put(new Card(null, new Rank(9)), false);
+        playerThree.put(new Card(null, new Rank(10)), false);
+        playerThree.put(new Card(null, new Rank(11)), false);
+        playerThree.put(new Card(null, new Rank(12)), false);
+        playerThree.put(new Card(null, new Rank(13)), false);
+        playerThree.put(new Card(null, new Rank(1)), false);
 
         HashMap<Card, Boolean> playerFour = new HashMap<>();
         playerFour.put(new Card(null, new Rank(2)), false);
