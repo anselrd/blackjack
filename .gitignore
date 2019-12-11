@@ -28,3 +28,6 @@ hs_err_pid*
 
 # Mac OS Garbage
 **/.DS_Store
+
+# Compiled files
+out/
