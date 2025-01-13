@@ -123,7 +123,7 @@ class Hand(object):
 
 class Table(object):
 
-    def __init__(self, dealer, players, ruleset=DealerStayAll17, max_hands=7):
+    def __init__(self, dealer, players, ruleset=rulesets.DealerStayAll17, max_hands=7):
         self.dealer = dealer
         self.players = players
         self.ruleset = ruleset

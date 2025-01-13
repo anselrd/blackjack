@@ -8,7 +8,7 @@ class CardIndex(Enum):
     KING = auto()
 
 class CardSuit(Enum):
-    SPADES =
-    HEARTS =
-    CLUBS =
-    DIAMONDS =
+    SPADES = auto()
+    HEARTS = auto()
+    CLUBS = auto()
+    DIAMONDS = auto()

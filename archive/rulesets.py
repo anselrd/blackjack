@@ -26,8 +26,14 @@ class RuleSet(object):
 
             if cards[0] == cards[1]:
                 self.get_double_rule(cards[0])
-            elif cards[0] == 'a' or cards[1] == 'a'
+            elif cards[0] == 'a' or cards[1] == 'a':
+                # todo: fill this in
+                pass
 
 
 class SingleDeck(RuleSet):
+    pass
+
+
+class DealerStayAll17(RuleSet):
     pass
