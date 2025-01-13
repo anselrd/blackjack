@@ -1,5 +1,6 @@
 import argparse
 import random
+import time
 from enum import Enum, auto
 
 
@@ -459,6 +460,10 @@ def train_strategy(das=True, categories='hsp'):
 
     finished = False
     prev_values = (-1, -1)
+    input_times = []
+    streak = 0
+    max_streak = 0
+    num_correct = 0
     while not finished:
         hand = (Card.random_by_value(), Card.random_by_value())
         splittable = hand[0].rank == hand[1].rank
@@ -466,9 +471,6 @@ def train_strategy(das=True, categories='hsp'):
         hard = not soft and not splittable
         total = hand[0].value + hand[1].value
         dealer = Card.random_by_value()
-
-        # if total > 13:
-        #     continue
 
         if soft and total == 10:
             continue
@@ -488,6 +490,7 @@ def train_strategy(das=True, categories='hsp'):
 
         prev_values = (total, dealer.value)
         while True:
+            start = time.time()
             move = input('[S]tand, [H]it, [D]ouble, S[P]lit, [Q]uit: ').lower().strip()
             if move == 'q':
                 finished = True
@@ -495,6 +498,10 @@ def train_strategy(das=True, categories='hsp'):
             if move not in ['s', 'h', 'd', 'p']:
                 print('Invalid selection. Enter one of "S", "H", "D", or "P".')
                 continue
+            input_times.append(time.time() - start)
+            break
+
+        if move == 'q':
             break
         if hard:
             if total < 8:
@@ -511,10 +518,27 @@ def train_strategy(das=True, categories='hsp'):
             correct_move = soft_strategy[non_ace.rank][dealer.rank]
         correct = move == correct_move
         correct_str = dict(s='stand', h='hit', p='split', d='double').get(correct_move)
-        print(
-            '\033[92mCorrect!\033[0m' if correct else
-            f'\033[91mIncorrect. The correct strategy was to {correct_str}.\033[0m'
-        )
+        if correct:
+            streak += 1
+            max_streak = max((max_streak, streak))
+            num_correct += 1
+            msg = 'Correct!'
+            colored_msg = f'\033[92m{msg}\033[0m'
+        else:
+            streak = 0
+            msg = f'Incorrect. The correct strategy was to {correct_str}.'
+            colored_msg = f'\033[91m{msg}\033[0m'
+        print(colored_msg)
+
+    if len(input_times) == 0:
+        return
+    print(f'Streak: {max_streak} correct responses')
+    print(f'Score: {num_correct}/{len(input_times)} ({100*num_correct/len(input_times):.1f}%)')
+    print(f'Average response time: {sum(input_times)/len(input_times):.02f}s')
+    if len(input_times) > 1:
+        print(f'Average without worst: {(sum(input_times) - max(input_times))/(len(input_times) - 1):.02f}s')
+    print(f'Best response time: {min(input_times):.02f}s')
+    print(f'Worst response time: {max(input_times):.02f}s')
 
 
 def parse_args():
