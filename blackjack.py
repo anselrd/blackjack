@@ -474,7 +474,7 @@ def train_strategy(das=True, categories='hsp'):
 
         if soft and total == 10:
             continue
-        elif hard and total > 16 or total < 9:
+        elif hard and (total > 16 or total < 9):
             continue
         elif splittable and 'p' not in categories:
             continue
